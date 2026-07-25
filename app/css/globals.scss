@@ -1,0 +1,292 @@
+@use "tailwindcss";
+
+:root {
+  --foreground-rgb: rgb(211, 216, 232);
+  --cyan: #00f5d4;
+  --neon: #00ff88;
+  --electric: #7b2ff7;
+  --hot: #ff2d6b;
+  --dark: #050a18;
+  --card: #0a1029;
+  --glass: rgba(10, 16, 41, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: var(--dark);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--electric);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--electric);
+  border-radius: 3px;
+}
+
+/* ===== GLOBAL ANIMATIONS ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(2deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(0, 245, 212, 0.3); }
+  50% { border-color: rgba(0, 245, 212, 0.8); }
+}
+
+@keyframes rotate-gradient {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--cyan); }
+}
+
+@keyframes particle-float {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  25% { transform: translate(20px, -30px) scale(1.2); opacity: 0.8; }
+  50% { transform: translate(-10px, -50px) scale(0.8); opacity: 0.3; }
+  75% { transform: translate(15px, -20px) scale(1.1); opacity: 0.6; }
+}
+
+@keyframes gradient-text {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes morph {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+@keyframes matrix-rain {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100vh); }
+}
+
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-text 3s ease infinite;
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--cyan), var(--electric), var(--hot), var(--neon));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* Line clamp */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Scrollbar thin for transcript */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+
+/* Project card scanline animation */
+@keyframes scanline {
+  0% { top: -5%; }
+  100% { top: 105%; }
+}
+
+.animate-scanline {
+  animation: scanline 2.5s ease-in-out infinite;
+}
+
+/* Floating particles for project cards */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-20px) scale(1.5); opacity: 1; }
+}
+
+/* Hero floating dev images */
+@keyframes float-img {
+  0%, 100% {
+    opacity: 0.06;
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    opacity: 0.1;
+    transform: translateY(-12px) rotate(1deg);
+  }
+  50% {
+    opacity: 0.06;
+    transform: translateY(-6px) rotate(-0.5deg);
+  }
+  75% {
+    opacity: 0.09;
+    transform: translateY(-15px) rotate(0.5deg);
+  }
+}
+
+.animate-float-img {
+  animation: float-img 8s ease-in-out infinite;
+}
+
+/* Data center horizontal lines - pulsing glow */
+@keyframes data-line-h {
+  0%, 100% { opacity: 0.04; stroke-width: 0.3; }
+  50% { opacity: 0.1; stroke-width: 0.6; }
+}
+
+.data-line-h {
+  animation: data-line-h 4s ease-in-out infinite;
+}
+
+/* Data center vertical lines */
+@keyframes data-line-v {
+  0%, 100% { opacity: 0.02; }
+  50% { opacity: 0.06; }
+}
+
+.data-line-v {
+  animation: data-line-v 5s ease-in-out infinite;
+}
+
+/* Stock market line drawing */
+@keyframes stock-draw {
+  0% { stroke-dashoffset: 1200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.stock-line {
+  stroke-dasharray: 1200;
+  animation: stock-draw 12s linear infinite;
+}
+
+/* Node pulse at intersections */
+@keyframes node-pulse {
+  0%, 100% { r: 2; opacity: 0.08; }
+  50% { r: 4; opacity: 0.2; }
+}
+
+.node-pulse {
+  animation: node-pulse 3s ease-in-out infinite;
+}
+
+/* Connection lines fade */
+@keyframes conn-line {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.08; }
+}
+
+.conn-line {
+  animation: conn-line 4s ease-in-out infinite;
+}
+
+/* Skill bar fill animation */
+@keyframes skill-fill {
+  from { width: 0%; }
+  to { width: var(--target-w); }
+}
+
+.skill-bar-fill {
+  animation: skill-fill 1.2s ease-out forwards;
+}
+
+/* Sticky cards - removed old stacking */
